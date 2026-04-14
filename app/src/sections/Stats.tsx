@@ -14,9 +14,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Coins, Users, Building2, Calendar } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
+import { Coins, Users, ShieldCheck, Calendar } from 'lucide-react';
 
 interface StatItem {
   value:  number;
@@ -28,10 +26,10 @@ interface StatItem {
 }
 
 const STATS: StatItem[] = [
-  { value: 5,   prefix: '+R$ ', suffix: ' milhões', label: 'recuperados',        icon: Coins,     color: '#00A86B' },
-  { value: 100, prefix: '+',    suffix: '',          label: 'Clientes atendidos', icon: Users,     color: '#00A86B' },
-  { value: 25,  prefix: '+',    suffix: '',          label: 'Empresas atendidas', icon: Building2, color: '#00A86B' },
-  { value: 10,  prefix: '+',    suffix: '',          label: 'Anos de experiência',icon: Calendar,  color: '#00A86B' },
+  { value: 5,   prefix: '+R$ ', suffix: ' milhões', label: 'recuperados',          icon: Coins,       color: '#00A86B' },
+  { value: 100, prefix: '+',    suffix: '',          label: 'Clientes atendidos',   icon: Users,       color: '#00A86B' },
+  { value: 98,  prefix: '',     suffix: '%',         label: 'Taxa de sucesso',       icon: ShieldCheck, color: '#00A86B' },
+  { value: 10,  prefix: '+',    suffix: '',          label: 'Anos de experiência',   icon: Calendar,    color: '#00A86B' },
 ];
 
 // ── Animated counter sub-component ──────────────────────────────────────────

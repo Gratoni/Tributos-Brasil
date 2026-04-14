@@ -12,10 +12,7 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronLeft, ChevronRight, TrendingUp, Building2, Cpu, CheckCircle } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface CaseStudy {
   id:          number;
@@ -164,9 +161,9 @@ export default function Results() {
             type="button"
             onClick={() => { prev(); resetTimer(); }}
             aria-label="Case anterior"
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-20 w-12 h-12 bg-white rounded-full shadow-card flex items-center justify-center text-[#003366] hover:bg-[#003366] hover:text-white transition-all duration-300 hover:scale-110"
+            className="absolute left-2 sm:left-0 top-1/2 -translate-y-1/2 sm:-translate-x-4 lg:-translate-x-6 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-card flex items-center justify-center text-[#003366] hover:bg-[#003366] hover:text-white transition-all duration-300 hover:scale-110"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
 
           {/* Next */}
@@ -174,9 +171,9 @@ export default function Results() {
             type="button"
             onClick={() => { next(); resetTimer(); }}
             aria-label="Próximo case"
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-20 w-12 h-12 bg-white rounded-full shadow-card flex items-center justify-center text-[#003366] hover:bg-[#003366] hover:text-white transition-all duration-300 hover:scale-110"
+            className="absolute right-2 sm:right-0 top-1/2 -translate-y-1/2 sm:translate-x-4 lg:translate-x-6 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-card flex items-center justify-center text-[#003366] hover:bg-[#003366] hover:text-white transition-all duration-300 hover:scale-110"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
 
           {/* Track */}

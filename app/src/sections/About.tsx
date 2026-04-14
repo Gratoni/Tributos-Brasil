@@ -11,10 +11,7 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Target, Eye, Award, Shield, Lightbulb, CheckCircle2 } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const VALUES = [
   { icon: Award,     title: 'Excelência Técnica',          description: 'Compromisso com a mais alta qualidade em cada análise e parecer.' },

@@ -11,10 +11,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, ChevronDown } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const CONTACT_INFO = [
   {
@@ -55,6 +52,17 @@ interface FormState {
 
 const EMPTY: FormState = { name: '', email: '', phone: '', company: '', segment: '', message: '' };
 
+type FormErrors = Partial<Record<keyof FormState, string>>;
+
+function validateForm(form: FormState): FormErrors {
+  const errors: FormErrors = {};
+  if (!form.name.trim())  errors.name  = 'Nome é obrigatório.';
+  if (!form.email.trim()) errors.email = 'Email é obrigatório.';
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+    errors.email = 'Informe um email válido.';
+  return errors;
+}
+
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef  = useRef<HTMLDivElement>(null);
@@ -62,6 +70,7 @@ export default function Contact() {
   const infoRef    = useRef<HTMLDivElement>(null);
 
   const [form,        setForm       ] = useState<FormState>(EMPTY);
+  const [errors,      setErrors     ] = useState<FormErrors>({});
   const [submitted,   setSubmitted  ] = useState(false);
   const [submitting,  setSubmitting ] = useState(false);
 
@@ -99,10 +108,23 @@ export default function Contact() {
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  ) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+    // Clear field error on change
+    if (errors[name as keyof FormState]) {
+      setErrors((prev) => { const next = { ...prev }; delete next[name as keyof FormState]; return next; });
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const fieldErrors = validateForm(form);
+    if (Object.keys(fieldErrors).length > 0) {
+      setErrors(fieldErrors);
+      return;
+    }
+    setErrors({});
     setSubmitting(true);
     // Simulate async submission (replace with real API call)
     setTimeout(() => {
@@ -174,10 +196,12 @@ export default function Contact() {
                         name="name"
                         value={form.name}
                         onChange={handleChange}
-                        required
                         placeholder="Seu nome"
-                        className={inputClass}
+                        aria-invalid={!!errors.name}
+                        aria-describedby={errors.name ? 'name-error' : undefined}
+                        className={`${inputClass} ${errors.name ? 'border-red-400 focus:border-red-400 focus:ring-red-200' : ''}`}
                       />
+                      {errors.name && <p id="name-error" role="alert" className="mt-1.5 text-xs text-red-500 font-medium">{errors.name}</p>}
                     </div>
                     <div>
                       <label htmlFor="email" className="block text-xs font-bold text-[#003366] mb-2 uppercase tracking-wide">
@@ -189,10 +213,12 @@ export default function Contact() {
                         name="email"
                         value={form.email}
                         onChange={handleChange}
-                        required
                         placeholder="seu@email.com"
-                        className={inputClass}
+                        aria-invalid={!!errors.email}
+                        aria-describedby={errors.email ? 'email-error' : undefined}
+                        className={`${inputClass} ${errors.email ? 'border-red-400 focus:border-red-400 focus:ring-red-200' : ''}`}
                       />
+                      {errors.email && <p id="email-error" role="alert" className="mt-1.5 text-xs text-red-500 font-medium">{errors.email}</p>}
                     </div>
                   </div>
 

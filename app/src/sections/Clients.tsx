@@ -11,14 +11,11 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Building2, Store, Factory, Briefcase,
   Landmark, Truck, ShoppingBag, Stethoscope,
   Plane, Utensils,
 } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const CLIENTS = [
   { name: 'Vivenda do Camarão',   icon: Store,        industry: 'Restaurantes'  },

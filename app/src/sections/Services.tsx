@@ -12,10 +12,7 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { RefreshCw, Target, ClipboardCheck, TrendingDown, Search, ArrowRight, Sparkles } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 /** 'navy' | 'green' maps to CSS utility classes defined in index.css */
 type AccentVariant = 'navy' | 'green';

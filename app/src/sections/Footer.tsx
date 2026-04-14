@@ -12,13 +12,10 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Linkedin, Instagram, Facebook, MessageCircle,
   Send, ChevronRight, Shield, Award, Lock, FileCheck,
 } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const FOOTER_LINKS = [
   { label: 'Home',        href: '#home'       },

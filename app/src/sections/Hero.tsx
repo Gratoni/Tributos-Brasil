@@ -135,16 +135,14 @@ export default function Hero() {
 
             {/* Headline */}
             <div ref={headlineRef} className="mb-7 space-y-1">
-              <div className="headline-line overflow-hidden">
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.95] font-heading">
-                  Recuperação
-                </h1>
-              </div>
-              <div className="headline-line overflow-hidden">
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.95] font-heading">
-                  <span className="text-gradient-green">Tributária</span>
-                </h1>
-              </div>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.95] font-heading">
+                <div className="headline-line overflow-hidden">
+                  <span className="block">Recuperação</span>
+                </div>
+                <div className="headline-line overflow-hidden">
+                  <span className="block text-gradient-green">Tributária</span>
+                </div>
+              </h1>
               <div className="headline-line overflow-hidden">
                 <p className="text-2xl sm:text-3xl font-semibold text-white/80 mt-2">
                   para Empresas Brasileiras

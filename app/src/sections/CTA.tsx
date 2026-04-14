@@ -11,10 +11,7 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, Clock, Gift, Shield, Phone } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const TRUST_ITEMS = [
   { icon: Clock,  text: 'Retorno em até 24h'          },

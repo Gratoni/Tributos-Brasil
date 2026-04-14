@@ -34,7 +34,7 @@ export default function Header() {
     const onScroll = () => {
       const scrollY = window.scrollY;
       setIsScrolled(scrollY > 80);
-      setIsTopBarVisible(scrollY < 40);
+      setIsTopBarVisible(scrollY < 80);
     };
 
     const observer = new IntersectionObserver(
@@ -89,7 +89,7 @@ export default function Header() {
         className={`overflow-hidden transition-all duration-500 ${
           isTopBarVisible && !isMobileMenuOpen ? 'max-h-10 opacity-100' : 'max-h-0 opacity-0'
         }`}
-        aria-hidden={isTopBarVisible && !isMobileMenuOpen ? 'false' : 'true'}
+        aria-hidden={!(isTopBarVisible && !isMobileMenuOpen) || undefined}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-1.5 text-xs border-b border-white/15">
