@@ -11,7 +11,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { Menu, X, Phone, Clock, ChevronDown, Linkedin, Instagram } from 'lucide-react';
+import { Menu, X, Phone, ChevronDown, Linkedin, Instagram } from 'lucide-react';
 
 /** Navigation items — label maps to the matching section id */
 const NAV_ITEMS = [
@@ -92,17 +92,7 @@ export default function Header() {
         aria-hidden={!(isTopBarVisible && !isMobileMenuOpen) || undefined}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-1.5 text-xs border-b border-white/15">
-            <div className="flex items-center gap-6 text-white/80">
-              <span className="hidden sm:flex items-center gap-1.5">
-                <Phone className="w-3 h-3" />
-                (11) 3000-0000
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Clock className="w-3 h-3" />
-                Seg – Sex: 9h às 18h
-              </span>
-            </div>
+          <div className="flex items-center justify-end py-1.5 text-xs border-b border-white/15">
             <div className="flex items-center gap-3">
               <a
                 href="#"
