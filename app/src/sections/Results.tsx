@@ -50,7 +50,7 @@ const CASES: CaseStudy[] = [
     highlights:  ['Reestruturação societária', 'Incentivos fiscais estaduais', 'Regime tributário otimizado'],
     icon:        TrendingUp,
     accent:      'green',
-    image:       '/case-industria.svg',
+    image:       '/hero-bg.jpg',
   },
   {
     id:          3,
@@ -62,7 +62,7 @@ const CASES: CaseStudy[] = [
     highlights:  ['Exportação de serviços TI', 'Não-incidência PIS/COFINS', 'Reclassificação de receitas'],
     icon:        Cpu,
     accent:      'navy',
-    image:       '/case-tech.svg',
+    image:       '/about-team.jpg',
   },
 ];
 
