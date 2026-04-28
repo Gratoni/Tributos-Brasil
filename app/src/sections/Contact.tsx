@@ -23,7 +23,7 @@ const CONTACT_INFO = [
   {
     icon: Phone,
     title: 'Telefone',
-    lines: ['(11) 3000-0000', '(11) 99999-9999'],
+    lines: ['(11) 3000-0000', '(11) 95707-7345'],
   },
   {
     icon: Mail,
@@ -49,9 +49,9 @@ const EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{1,63}$/;
 const PHONE_RE = /^\(?\d{2}\)?[\s-]?\d{4,5}[\s-]?\d{4}$/;
 
 interface FormState {
-  name:    string;
-  email:   string;
-  phone:   string;
+  name: string;
+  email: string;
+  phone: string;
   company: string;
   segment: string;
   message: string;
@@ -90,15 +90,15 @@ function validateForm(form: FormState): FormErrors {
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
-  const headerRef  = useRef<HTMLDivElement>(null);
-  const formRef    = useRef<HTMLFormElement>(null);
-  const infoRef    = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const infoRef = useRef<HTMLDivElement>(null);
 
-  const [form,       setForm      ] = useState<FormState>(EMPTY);
-  const [errors,     setErrors    ] = useState<FormErrors>({});
-  const [submitted,  setSubmitted ] = useState(false);
+  const [form, setForm] = useState<FormState>(EMPTY);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [apiError,   setApiError  ] = useState<string | null>(null);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -108,23 +108,29 @@ export default function Contact() {
       if (headerChildren?.length) {
         gsap.fromTo(headerChildren,
           { opacity: 0, y: 28 },
-          { opacity: 1, y: 0, duration: 0.5, stagger: 0.12, ease: 'expo.out',
-            scrollTrigger: { trigger: headerRef.current, ...base } }
+          {
+            opacity: 1, y: 0, duration: 0.5, stagger: 0.12, ease: 'expo.out',
+            scrollTrigger: { trigger: headerRef.current, ...base }
+          }
         );
       }
 
       gsap.fromTo(formRef.current,
         { opacity: 0, x: -50 },
-        { opacity: 1, x: 0, duration: 0.7, ease: 'expo.out',
-          scrollTrigger: { trigger: formRef.current, ...base } }
+        {
+          opacity: 1, x: 0, duration: 0.7, ease: 'expo.out',
+          scrollTrigger: { trigger: formRef.current, ...base }
+        }
       );
 
       const cards = infoRef.current?.querySelectorAll('.info-card');
       if (cards?.length) {
         gsap.fromTo(cards,
           { opacity: 0, x: 50 },
-          { opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: 'expo.out',
-            scrollTrigger: { trigger: infoRef.current, ...base } }
+          {
+            opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: 'expo.out',
+            scrollTrigger: { trigger: infoRef.current, ...base }
+          }
         );
       }
     }, sectionRef);

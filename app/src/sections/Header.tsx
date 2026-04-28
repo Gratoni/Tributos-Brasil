@@ -15,19 +15,19 @@ import { Menu, X, Phone, ChevronDown, Linkedin, Instagram } from 'lucide-react';
 
 /** Navigation items — label maps to the matching section id */
 const NAV_ITEMS = [
-  { label: 'Home',       href: '#home' },
-  { label: 'Sobre',      href: '#sobre' },
-  { label: 'Serviços',   href: '#servicos' },
-  { label: 'Clientes',   href: '#clientes' },
+  { label: 'Home', href: '#home' },
+  { label: 'Sobre', href: '#sobre' },
+  { label: 'Serviços', href: '#servicos' },
+  { label: 'Clientes', href: '#clientes' },
   { label: 'Resultados', href: '#resultados' },
-  { label: 'Contato',    href: '#contato' },
+  { label: 'Contato', href: '#contato' },
 ] as const;
 
 export default function Header() {
-  const [isScrolled,        setIsScrolled       ] = useState(false);
-  const [isMobileMenuOpen,  setIsMobileMenuOpen  ] = useState(false);
-  const [activeSection,     setActiveSection     ] = useState('home');
-  const [isTopBarVisible,   setIsTopBarVisible   ] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [isTopBarVisible, setIsTopBarVisible] = useState(true);
 
   // ── Scroll & intersection logic ──────────────────────────────────────────
   useEffect(() => {
@@ -80,15 +80,13 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isLight ? 'glass-effect shadow-navy-sm py-3' : 'bg-transparent py-4'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isLight ? 'glass-effect shadow-navy-sm py-3' : 'bg-transparent py-4'
+        }`}
     >
       {/* ── Top bar ── */}
       <div
-        className={`overflow-hidden transition-all duration-500 ${
-          isTopBarVisible && !isMobileMenuOpen ? 'max-h-10 opacity-100' : 'max-h-0 opacity-0'
-        }`}
+        className={`overflow-hidden transition-all duration-500 ${isTopBarVisible && !isMobileMenuOpen ? 'max-h-10 opacity-100' : 'max-h-0 opacity-0'
+          }`}
         aria-hidden={!(isTopBarVisible && !isMobileMenuOpen) || undefined}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -136,23 +134,20 @@ export default function Header() {
               <img
                 src="/onlywhitelogo.png"
                 alt="Tributos Brasil logo"
-                className={`w-full h-full object-contain transition-all duration-300 ${
-                  isLight ? 'logo-scrolled' : ''
-                }`}
+                className={`w-full h-full object-contain transition-all duration-300 ${isLight ? 'logo-scrolled' : ''
+                  }`}
               />
             </div>
             <div className="hidden sm:block leading-tight">
               <span
-                className={`block font-bold text-[1.05rem] tracking-tight transition-colors duration-300 font-heading ${
-                  isLight ? 'text-[#003366]' : 'text-white'
-                }`}
+                className={`block font-bold text-[1.05rem] tracking-tight transition-colors duration-300 font-heading ${isLight ? 'text-[#003366]' : 'text-white'
+                  }`}
               >
                 Tributos Brasil
               </span>
               <span
-                className={`block text-[0.65rem] tracking-[0.18em] uppercase font-medium transition-colors duration-300 ${
-                  isLight ? 'text-[#00A86B]' : 'text-white/60'
-                }`}
+                className={`block text-[0.65rem] tracking-[0.18em] uppercase font-medium transition-colors duration-300 ${isLight ? 'text-[#00A86B]' : 'text-white/60'
+                  }`}
               >
                 Recuperação Tributária
               </span>
@@ -163,29 +158,27 @@ export default function Header() {
           <nav className="hidden lg:flex items-center gap-7" aria-label="Menu principal">
             {NAV_ITEMS.map(({ label, href }) => {
               const sectionId = href.slice(1);
-              const isActive  = activeSection === sectionId;
+              const isActive = activeSection === sectionId;
               return (
                 <a
                   key={label}
                   href={href}
                   onClick={(e) => { e.preventDefault(); scrollTo(href); }}
-                  className={`relative text-sm font-semibold tracking-wide transition-colors duration-300 py-1 group ${
-                    isLight
-                      ? isActive
-                        ? 'text-[#00A86B]'
-                        : 'text-[#333] hover:text-[#003366]'
-                      : isActive
-                        ? 'text-[#00A86B]'
-                        : 'text-white/85 hover:text-white'
-                  }`}
+                  className={`relative text-sm font-semibold tracking-wide transition-colors duration-300 py-1 group ${isLight
+                    ? isActive
+                      ? 'text-[#00A86B]'
+                      : 'text-[#333] hover:text-[#003366]'
+                    : isActive
+                      ? 'text-[#00A86B]'
+                      : 'text-white/85 hover:text-white'
+                    }`}
                   aria-current={isActive ? 'page' : undefined}
                 >
                   {label}
                   {/* Active indicator */}
                   <span
-                    className={`absolute -bottom-0.5 left-0 h-[2px] bg-[#00A86B] rounded-full transition-all duration-300 ${
-                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                    }`}
+                    className={`absolute -bottom-0.5 left-0 h-[2px] bg-[#00A86B] rounded-full transition-all duration-300 ${isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                      }`}
                   />
                 </a>
               );
@@ -195,14 +188,13 @@ export default function Header() {
           {/* ── Desktop CTA ── */}
           <div className="hidden lg:flex items-center gap-3">
             <a
-              href="tel:+551130000000"
-              className={`hidden xl:flex items-center gap-2 text-sm font-semibold transition-colors duration-300 ${
-                isLight ? 'text-[#003366] hover:text-[#00A86B]' : 'text-white/80 hover:text-white'
-              }`}
+              href="tel:+5511957077345"
+              className={`hidden xl:flex items-center gap-2 text-sm font-semibold transition-colors duration-300 ${isLight ? 'text-[#003366] hover:text-[#00A86B]' : 'text-white/80 hover:text-white'
+                }`}
               aria-label="Ligar agora"
             >
               <Phone className="w-4 h-4" />
-              <span>(11) 3000-0000</span>
+              <span>(11) 95707-7345</span>
             </a>
             <span className={`hidden xl:block w-px h-5 ${isLight ? 'bg-gray-200' : 'bg-white/20'}`} />
             <a
@@ -218,9 +210,8 @@ export default function Header() {
           {/* ── Mobile toggle ── */}
           <button
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-            className={`lg:hidden p-2 rounded-lg transition-colors duration-300 ${
-              isLight ? 'text-[#003366] hover:bg-gray-100' : 'text-white hover:bg-white/10'
-            }`}
+            className={`lg:hidden p-2 rounded-lg transition-colors duration-300 ${isLight ? 'text-[#003366] hover:bg-gray-100' : 'text-white hover:bg-white/10'
+              }`}
             type="button"
             aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
             aria-expanded={isMobileMenuOpen ? 'true' : 'false'}
@@ -231,9 +222,8 @@ export default function Header() {
 
         {/* ── Mobile menu ── */}
         <div
-          className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${
-            isMobileMenuOpen ? 'max-h-[480px] opacity-100' : 'max-h-0 opacity-0'
-          }`}
+          className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${isMobileMenuOpen ? 'max-h-[480px] opacity-100' : 'max-h-0 opacity-0'
+            }`}
           aria-hidden={isMobileMenuOpen ? 'false' : 'true'}
         >
           <nav
@@ -247,11 +237,10 @@ export default function Header() {
                   key={label}
                   href={href}
                   onClick={(e) => { e.preventDefault(); scrollTo(href); }}
-                  className={`flex items-center justify-between px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 ${
-                    isActive
-                      ? 'bg-[#003366]/10 text-[#003366]'
-                      : 'text-[#444] hover:bg-[#003366]/5 hover:text-[#003366]'
-                  }`}
+                  className={`flex items-center justify-between px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 ${isActive
+                    ? 'bg-[#003366]/10 text-[#003366]'
+                    : 'text-[#444] hover:bg-[#003366]/5 hover:text-[#003366]'
+                    }`}
                   aria-current={isActive ? 'page' : undefined}
                 >
                   {label}
@@ -263,17 +252,16 @@ export default function Header() {
             {/* Mobile CTA */}
             <div className="pt-3 px-4 flex flex-col gap-2">
               <a
-                href="tel:+551130000000"
+                href="tel:+5511957077345"
                 className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border-2 border-[#003366] text-[#003366] font-bold text-sm transition-all duration-200 hover:bg-[#003366] hover:text-white"
               >
                 <Phone className="w-4 h-4" />
-                (11) 3000-0000
+                (11) 95707-7345
               </a>
               <a
                 href="#contato"
                 onClick={(e) => { e.preventDefault(); scrollTo('#contato'); }}
-                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#00A86B] text-white font-bold text-sm transition-all duration-200 hover:bg-[#003366]"
-              >
+                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#00A86B] text-white font-bold text-sm transition-all duration-200 hover:bg-[#003366]"              >
                 Fale com um Especialista
               </a>
             </div>

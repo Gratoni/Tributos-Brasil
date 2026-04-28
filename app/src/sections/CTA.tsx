@@ -14,20 +14,20 @@ import { gsap } from 'gsap';
 import { ArrowRight, Clock, Gift, Shield, Phone } from 'lucide-react';
 
 const TRUST_ITEMS = [
-  { icon: Clock,  text: 'Retorno em até 24h'          },
-  { icon: Gift,   text: 'Consultoria inicial gratuita' },
-  { icon: Shield, text: '100% confidencial'            },
+  { icon: Clock, text: 'Retorno em até 24h' },
+  { icon: Gift, text: 'Consultoria inicial gratuita' },
+  { icon: Shield, text: '100% confidencial' },
 ] as const;
 
 const HEADLINE = 'Pronto para recuperar o que é seu?';
 
 export default function CTA() {
-  const sectionRef  = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
-  const subRef      = useRef<HTMLParagraphElement>(null);
-  const btnRef      = useRef<HTMLAnchorElement>(null);
-  const trustRef    = useRef<HTMLDivElement>(null);
-  const bgRef       = useRef<HTMLDivElement>(null);
+  const subRef = useRef<HTMLParagraphElement>(null);
+  const btnRef = useRef<HTMLAnchorElement>(null);
+  const trustRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -36,8 +36,10 @@ export default function CTA() {
       // Background zoom-in
       gsap.fromTo(bgRef.current,
         { scale: 1.08, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1, ease: 'power2.out',
-          scrollTrigger: { trigger: sectionRef.current, ...base } }
+        {
+          scale: 1, opacity: 1, duration: 1, ease: 'power2.out',
+          scrollTrigger: { trigger: sectionRef.current, ...base }
+        }
       );
 
       // Character-by-character headline
@@ -56,15 +58,19 @@ export default function CTA() {
       // Subheadline
       gsap.fromTo(subRef.current,
         { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
-          scrollTrigger: { trigger: subRef.current, ...base } }
+        {
+          opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
+          scrollTrigger: { trigger: subRef.current, ...base }
+        }
       );
 
       // Button scale-in
       gsap.fromTo(btnRef.current,
         { opacity: 0, scale: 0.88 },
-        { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)',
-          scrollTrigger: { trigger: btnRef.current, start: 'top 90%', toggleActions: 'play none none none' } }
+        {
+          opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)',
+          scrollTrigger: { trigger: btnRef.current, start: 'top 90%', toggleActions: 'play none none none' }
+        }
       );
 
       // Trust badges
@@ -72,8 +78,10 @@ export default function CTA() {
       if (badges?.length) {
         gsap.fromTo(badges,
           { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.5, stagger: 0.12, ease: 'expo.out',
-            scrollTrigger: { trigger: trustRef.current, start: 'top 90%', toggleActions: 'play none none none' } }
+          {
+            opacity: 1, y: 0, duration: 0.5, stagger: 0.12, ease: 'expo.out',
+            scrollTrigger: { trigger: trustRef.current, start: 'top 90%', toggleActions: 'play none none none' }
+          }
         );
       }
     }, sectionRef);
@@ -142,8 +150,7 @@ export default function CTA() {
 
         {/* Subheadline */}
         <p ref={subRef} className="text-xl text-white/75 mb-12 max-w-2xl mx-auto leading-relaxed">
-          Fale com nossos especialistas e descubra quanto sua empresa pode recuperar.
-          <strong className="text-white"> A primeira consulta é gratuita</strong> e sem compromisso.
+          <strong className="text-white">Fale com nossos especialistas.</strong>
         </p>
 
         {/* CTA Button — animated gradient border */}
@@ -163,11 +170,11 @@ export default function CTA() {
           </a>
 
           <a
-            href="tel:+551130000000"
+            href="tel:+5511957077345"
             className="inline-flex items-center gap-2 px-8 py-5 text-base font-bold text-white/80 border-2 border-white/20 rounded-xl transition-all duration-300 hover:text-white hover:border-white/50 hover:bg-white/5"
           >
             <Phone className="w-4 h-4" />
-            (11) 3000-0000
+            (11) 95707-7345
           </a>
         </div>
 

@@ -43,32 +43,32 @@ function FacebookIcon({ className }: { className?: string }) {
 }
 
 const FOOTER_LINKS = [
-  { label: 'Home',        href: '#home'       },
-  { label: 'Sobre Nós',   href: '#sobre'      },
-  { label: 'Serviços',    href: '#servicos'   },
-  { label: 'Clientes',    href: '#clientes'   },
-  { label: 'Resultados',  href: '#resultados' },
-  { label: 'Contato',     href: '#contato'    },
+  { label: 'Home', href: '#home' },
+  { label: 'Sobre Nós', href: '#sobre' },
+  { label: 'Serviços', href: '#servicos' },
+  { label: 'Clientes', href: '#clientes' },
+  { label: 'Resultados', href: '#resultados' },
+  { label: 'Contato', href: '#contato' },
 ] as const;
 
 const SOCIAL_LINKS = [
-  { icon: LinkedinIcon,   href: '#', label: 'LinkedIn'   },
-  { icon: InstagramIcon,  href: '#', label: 'Instagram'  },
-  { icon: FacebookIcon,   href: '#', label: 'Facebook'   },
-  { icon: MessageCircle,  href: '#', label: 'WhatsApp'   },
+  { icon: LinkedinIcon, href: '#', label: 'LinkedIn' },
+  { icon: InstagramIcon, href: '#', label: 'Instagram' },
+  { icon: FacebookIcon, href: '#', label: 'Facebook' },
+  { icon: MessageCircle, href: '#', label: 'WhatsApp' },
 ] as const;
 
 const SEALS = [
-  { icon: Award,     label: 'OAB/SP Registrado',   sub: 'Advogados'          },
-  { icon: FileCheck, label: 'CRC Credenciado',      sub: 'Contadores'         },
-  { icon: Shield,    label: 'LGPD Conforme',        sub: 'Privacidade de dados'},
-  { icon: Lock,      label: 'SSL Certificado',      sub: 'Conexão segura'     },
+  { icon: Award, label: 'OAB/SP Registrado', sub: 'Advogados' },
+  { icon: FileCheck, label: 'CRC Credenciado', sub: 'Contadores' },
+  { icon: Shield, label: 'LGPD Conforme', sub: 'Privacidade de dados' },
+  { icon: Lock, label: 'SSL Certificado', sub: 'Conexão segura' },
 ] as const;
 
 export default function Footer() {
-  const footerRef   = useRef<HTMLElement>(null);
-  const [email,     setEmail]     = useState('');
-  const [subscribed,setSubscribed] = useState(false);
+  const footerRef = useRef<HTMLElement>(null);
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -198,8 +198,8 @@ export default function Footer() {
               </li>
               <li>
                 <span className="block text-white/30 text-xs mb-1 uppercase tracking-widest">Telefone</span>
-                <a href="tel:+551130000000" className="hover:text-[#00A86B] transition-colors duration-300">
-                  (11) 3000-0000
+                <a href="tel:+5511957077345" className="hover:text-[#00A86B] transition-colors duration-300">
+                  (11) 95707-7345
                 </a>
               </li>
               <li>
