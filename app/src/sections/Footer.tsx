@@ -13,9 +13,34 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import {
-  Linkedin, Instagram, Facebook, MessageCircle,
+  MessageCircle,
   Send, ChevronRight, Shield, Award, Lock, FileCheck,
 } from 'lucide-react';
+
+// Brand icons removed from lucide-react — inline SVG replacements
+function LinkedinIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S.02 4.88.02 3.5 1.13 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7.5 0h3.84v2.19h.05C12.92 8.72 14.64 8 16.56 8 20.64 8 21.5 10.52 21.5 14v10h-4v-8.88c0-2.12-.04-4.85-2.95-4.85-2.96 0-3.41 2.31-3.41 4.69V24H8V8z" />
+    </svg>
+  );
+}
+
+function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.851s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+    </svg>
+  );
+}
+
+function FacebookIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
+    </svg>
+  );
+}
 
 const FOOTER_LINKS = [
   { label: 'Home',        href: '#home'       },
@@ -27,9 +52,9 @@ const FOOTER_LINKS = [
 ] as const;
 
 const SOCIAL_LINKS = [
-  { icon: Linkedin,       href: '#', label: 'LinkedIn'   },
-  { icon: Instagram,      href: '#', label: 'Instagram'  },
-  { icon: Facebook,       href: '#', label: 'Facebook'   },
+  { icon: LinkedinIcon,   href: '#', label: 'LinkedIn'   },
+  { icon: InstagramIcon,  href: '#', label: 'Instagram'  },
+  { icon: FacebookIcon,   href: '#', label: 'Facebook'   },
   { icon: MessageCircle,  href: '#', label: 'WhatsApp'   },
 ] as const;
 
@@ -67,7 +92,10 @@ export default function Footer() {
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    const trimmed = email.trim();
+    if (!trimmed) return;
+    // Basic email format check
+    if (!/^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{1,63}$/.test(trimmed)) return;
     setSubscribed(true);
     setTimeout(() => { setSubscribed(false); setEmail(''); }, 3500);
   };

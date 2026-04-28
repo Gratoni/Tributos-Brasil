@@ -3,15 +3,16 @@
  * =========================================
  * Lead-capture form with:
  *   - Controlled form state (name, email, phone, company, segment, message)
- *   - Client-side validation feedback
- *   - Success state with animated confirmation
+ *   - Honeypot anti-spam field (_trap)
+ *   - Client-side validation (name, email required; phone format; length limits)
+ *   - POST to /api/contact serverless function
+ *   - Success / error / loading states
  *   - Contact info cards (address, phone, email, hours)
- *   - No inline styles — all layout via Tailwind utilities
  */
 
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, ChevronDown } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, ChevronDown, AlertCircle } from 'lucide-react';
 
 const CONTACT_INFO = [
   {
@@ -41,6 +42,12 @@ const SEGMENTS = [
   'Saúde', 'Construção', 'Agronegócio', 'Outros',
 ] as const;
 
+// ── Validation ────────────────────────────────────────────────────────────────
+
+const EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{1,63}$/;
+/** Accepts (XX) XXXX-XXXX and (XX) XXXXX-XXXX with optional formatting chars */
+const PHONE_RE = /^\(?\d{2}\)?[\s-]?\d{4,5}[\s-]?\d{4}$/;
+
 interface FormState {
   name:    string;
   email:   string;
@@ -56,12 +63,30 @@ type FormErrors = Partial<Record<keyof FormState, string>>;
 
 function validateForm(form: FormState): FormErrors {
   const errors: FormErrors = {};
-  if (!form.name.trim())  errors.name  = 'Nome é obrigatório.';
-  if (!form.email.trim()) errors.email = 'Email é obrigatório.';
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+
+  if (!form.name.trim())
+    errors.name = 'Nome é obrigatório.';
+  else if (form.name.trim().length > 120)
+    errors.name = 'Nome muito longo (máx. 120 caracteres).';
+
+  if (!form.email.trim())
+    errors.email = 'Email é obrigatório.';
+  else if (!EMAIL_RE.test(form.email.trim()))
     errors.email = 'Informe um email válido.';
+
+  if (form.phone.trim() && !PHONE_RE.test(form.phone.trim()))
+    errors.phone = 'Formato inválido. Ex: (11) 99999-9999';
+
+  if (form.company.trim().length > 150)
+    errors.company = 'Razão social muito longa (máx. 150 caracteres).';
+
+  if (form.message.trim().length > 2000)
+    errors.message = 'Mensagem muito longa (máx. 2 000 caracteres).';
+
   return errors;
 }
+
+// ── Component ─────────────────────────────────────────────────────────────────
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -69,10 +94,11 @@ export default function Contact() {
   const formRef    = useRef<HTMLFormElement>(null);
   const infoRef    = useRef<HTMLDivElement>(null);
 
-  const [form,        setForm       ] = useState<FormState>(EMPTY);
-  const [errors,      setErrors     ] = useState<FormErrors>({});
-  const [submitted,   setSubmitted  ] = useState(false);
-  const [submitting,  setSubmitting ] = useState(false);
+  const [form,       setForm      ] = useState<FormState>(EMPTY);
+  const [errors,     setErrors    ] = useState<FormErrors>({});
+  const [submitted,  setSubmitted ] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [apiError,   setApiError  ] = useState<string | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -111,32 +137,57 @@ export default function Contact() {
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    // Clear field error on change
+    setApiError(null);
     if (errors[name as keyof FormState]) {
       setErrors((prev) => { const next = { ...prev }; delete next[name as keyof FormState]; return next; });
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const fieldErrors = validateForm(form);
     if (Object.keys(fieldErrors).length > 0) {
       setErrors(fieldErrors);
       return;
     }
+
     setErrors({});
+    setApiError(null);
     setSubmitting(true);
-    // Simulate async submission (replace with real API call)
-    setTimeout(() => {
-      setSubmitting(false);
+
+    // Read honeypot value from the hidden input
+    const trapValue = (e.currentTarget.elements.namedItem('_trap') as HTMLInputElement | null)?.value ?? '';
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, _trap: trapValue }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setApiError(data?.error ?? 'Erro ao enviar mensagem. Tente novamente.');
+        return;
+      }
+
       setSubmitted(true);
-      setTimeout(() => { setSubmitted(false); setForm(EMPTY); }, 4000);
-    }, 1200);
+      setForm(EMPTY);
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch {
+      setApiError('Sem conexão. Verifique sua internet e tente novamente.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputClass =
     'w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-[#333] placeholder:text-[#aaa] text-sm ' +
     'focus:border-[#00A86B] focus:ring-2 focus:ring-[#00A86B]/20 outline-none transition-all duration-300';
+
+  const errorInputClass = 'border-red-400 focus:border-red-400 focus:ring-red-200';
 
   return (
     <section
@@ -169,6 +220,16 @@ export default function Contact() {
               className="bg-[#f4f6f9] rounded-3xl p-8 lg:p-10"
               noValidate
             >
+              {/* Honeypot — hidden from real users, bots will fill it */}
+              <input
+                type="text"
+                name="_trap"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute w-0 h-0 opacity-0 pointer-events-none overflow-hidden"
+              />
+
               {submitted ? (
                 /* Success state */
                 <div className="flex flex-col items-center justify-center py-14 text-center">
@@ -184,6 +245,14 @@ export default function Contact() {
                 </div>
               ) : (
                 <>
+                  {/* API error banner */}
+                  {apiError && (
+                    <div role="alert" className="flex items-start gap-3 mb-5 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+                      <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                      <span>{apiError}</span>
+                    </div>
+                  )}
+
                   {/* Row 1: name + email */}
                   <div className="grid sm:grid-cols-2 gap-5 mb-5">
                     <div>
@@ -197,9 +266,10 @@ export default function Contact() {
                         value={form.name}
                         onChange={handleChange}
                         placeholder="Seu nome"
+                        maxLength={120}
                         aria-invalid={!!errors.name}
                         aria-describedby={errors.name ? 'name-error' : undefined}
-                        className={`${inputClass} ${errors.name ? 'border-red-400 focus:border-red-400 focus:ring-red-200' : ''}`}
+                        className={`${inputClass} ${errors.name ? errorInputClass : ''}`}
                       />
                       {errors.name && <p id="name-error" role="alert" className="mt-1.5 text-xs text-red-500 font-medium">{errors.name}</p>}
                     </div>
@@ -214,9 +284,10 @@ export default function Contact() {
                         value={form.email}
                         onChange={handleChange}
                         placeholder="seu@email.com"
+                        maxLength={254}
                         aria-invalid={!!errors.email}
                         aria-describedby={errors.email ? 'email-error' : undefined}
-                        className={`${inputClass} ${errors.email ? 'border-red-400 focus:border-red-400 focus:ring-red-200' : ''}`}
+                        className={`${inputClass} ${errors.email ? errorInputClass : ''}`}
                       />
                       {errors.email && <p id="email-error" role="alert" className="mt-1.5 text-xs text-red-500 font-medium">{errors.email}</p>}
                     </div>
@@ -235,8 +306,12 @@ export default function Contact() {
                         value={form.phone}
                         onChange={handleChange}
                         placeholder="(11) 99999-9999"
-                        className={inputClass}
+                        maxLength={20}
+                        aria-invalid={!!errors.phone}
+                        aria-describedby={errors.phone ? 'phone-error' : undefined}
+                        className={`${inputClass} ${errors.phone ? errorInputClass : ''}`}
                       />
+                      {errors.phone && <p id="phone-error" role="alert" className="mt-1.5 text-xs text-red-500 font-medium">{errors.phone}</p>}
                     </div>
                     <div>
                       <label htmlFor="company" className="block text-xs font-bold text-[#003366] mb-2 uppercase tracking-wide">
@@ -249,8 +324,12 @@ export default function Contact() {
                         value={form.company}
                         onChange={handleChange}
                         placeholder="Razão social"
-                        className={inputClass}
+                        maxLength={150}
+                        aria-invalid={!!errors.company}
+                        aria-describedby={errors.company ? 'company-error' : undefined}
+                        className={`${inputClass} ${errors.company ? errorInputClass : ''}`}
                       />
+                      {errors.company && <p id="company-error" role="alert" className="mt-1.5 text-xs text-red-500 font-medium">{errors.company}</p>}
                     </div>
                   </div>
 
@@ -287,9 +366,19 @@ export default function Contact() {
                       value={form.message}
                       onChange={handleChange}
                       rows={4}
+                      maxLength={2000}
                       placeholder="Descreva brevemente sua situação fiscal..."
-                      className={`${inputClass} resize-none`}
+                      aria-invalid={!!errors.message}
+                      aria-describedby={errors.message ? 'message-error' : undefined}
+                      className={`${inputClass} resize-none ${errors.message ? errorInputClass : ''}`}
                     />
+                    <div className="flex justify-between items-center mt-1">
+                      {errors.message
+                        ? <p id="message-error" role="alert" className="text-xs text-red-500 font-medium">{errors.message}</p>
+                        : <span />
+                      }
+                      <span className="text-xs text-[#aaa]">{form.message.length}/2000</span>
+                    </div>
                   </div>
 
                   {/* Submit */}

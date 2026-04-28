@@ -69,6 +69,23 @@ function ChartContainer({
   )
 }
 
+/**
+ * Strips characters that are not valid in CSS property keys (variable names).
+ * Allows: letters, digits, hyphens, underscores.
+ */
+function safeCSSKey(value: string): string {
+  return value.replace(/[^a-zA-Z0-9_-]/g, "")
+}
+
+/**
+ * Strips characters that are not valid in CSS color / variable values.
+ * Allows: letters, digits, #, (, ), ,, ., %, /, space, +, -.
+ * This prevents closing the rule block with `}` or injecting selectors.
+ */
+function safeCSSValue(value: string): string {
+  return value.replace(/[^a-zA-Z0-9#(),.\s%/+\-]/g, "")
+}
+
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
     ([, config]) => config.theme || config.color
@@ -90,7 +107,9 @@ ${colorConfig
     const color =
       itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
       itemConfig.color
-    return color ? `  --color-${key}: ${color};` : null
+    return color
+      ? `  --color-${safeCSSKey(key)}: ${safeCSSValue(color)};`
+      : null
   })
   .join("\n")}
 }
