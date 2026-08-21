@@ -18,6 +18,7 @@ const NAV_ITEMS = [
   { label: 'Home', href: '#home' },
   { label: 'Sobre', href: '#sobre' },
   { label: 'Serviços', href: '#servicos' },
+  { label: 'Calculadora', href: '#calculadora' },
   { label: 'Clientes', href: '#clientes' },
   { label: 'Resultados', href: '#resultados' },
   { label: 'Contato', href: '#contato' },
