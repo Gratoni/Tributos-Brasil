@@ -162,6 +162,11 @@ export default function Services() {
             Da recuperação de créditos ao planejamento estratégico — cobrimos todo o espectro
             tributário com precisão técnica e foco em resultados.
           </p>
+          <div className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[#003366]/60">
+            <span className="h-px w-8 bg-[#C9A84C]" aria-hidden="true" />
+            5 frentes de atuação
+            <span className="h-px w-8 bg-[#C9A84C]" aria-hidden="true" />
+          </div>
         </div>
 
         {/* ── Featured card (full-width editorial) ── */}
@@ -207,11 +212,11 @@ export default function Services() {
             </div>
 
             {/* CTA */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 lg:pt-1">
               <a
                 href="#contato"
                 onClick={scrollToContact}
-                className="group/btn inline-flex items-center gap-2 px-7 py-4 bg-[#00A86B] text-white font-bold rounded-xl transition-all duration-300 hover:bg-white hover:text-[#003366] hover:shadow-green-md hover:-translate-y-0.5 text-sm whitespace-nowrap"
+                className="group/btn inline-flex items-center gap-2 px-7 py-4 bg-[#00A86B] text-white font-bold rounded-xl transition-all duration-300 hover:bg-white hover:text-[#003366] hover:shadow-green-md hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[#C9A84C] text-sm whitespace-nowrap"
               >
                 Saiba mais
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
@@ -230,7 +235,7 @@ export default function Services() {
             return (
               <div
                 key={service.title}
-                className="service-card group relative bg-white rounded-2xl p-7 shadow-card transition-all duration-500 hover:shadow-card-hover hover:-translate-y-2 overflow-hidden"
+                className="service-card group relative flex min-h-[370px] flex-col bg-white rounded-2xl p-7 shadow-card transition-all duration-500 hover:shadow-card-hover hover:-translate-y-2 overflow-hidden"
               >
                 {/* Top accent border — bg track + animated fill */}
                 <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-2xl ${ac.borderBg}`} />
@@ -265,7 +270,7 @@ export default function Services() {
                 <a
                   href="#contato"
                   onClick={scrollToContact}
-                  className={`inline-flex items-center gap-1.5 text-xs font-bold transition-all duration-300 group-hover:gap-3 ${ac.link}`}
+                  className={`mt-auto inline-flex items-center gap-1.5 text-xs font-bold transition-all duration-300 group-hover:gap-3 focus-visible:ring-2 focus-visible:ring-[#C9A84C] ${ac.link}`}
                 >
                   Saiba mais
                   <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />

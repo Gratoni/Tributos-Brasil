@@ -114,13 +114,9 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#00A86B]/8" />
       </div>
 
-      {/* ── Decorative orbs ── */}
-      <div className="absolute top-1/3 left-[-10%] w-[500px] h-[500px] bg-[#003366]/30 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
-      <div className="absolute bottom-1/4 right-[-5%] w-[400px] h-[400px] bg-[#00A86B]/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
-
       {/* ── Content ── */}
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-28">
-        <div className="grid lg:grid-cols-[1fr_auto] gap-12 xl:gap-20 items-center">
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 sm:pt-36 sm:pb-28">
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_20rem] gap-12 xl:gap-24 items-center">
 
           {/* ── Left: text ── */}
           <div className="text-white max-w-2xl">
@@ -151,7 +147,7 @@ export default function Hero() {
             </div>
 
             {/* Subheadline */}
-            <p ref={subRef} className="text-lg sm:text-xl text-white/75 mb-10 leading-relaxed max-w-lg">
+            <p ref={subRef} className="text-lg sm:text-xl text-white/75 mb-10 leading-relaxed max-w-xl">
               Transformamos complexidade fiscal em valor real. Mais de{' '}
               <strong className="text-[#00A86B] font-bold">R$ 5 milhões</strong>{' '}
               recuperados para nossos clientes com total segurança jurídica.
@@ -177,10 +173,10 @@ export default function Hero() {
             </div>
 
             {/* Trust bar */}
-            <div className="mt-10 flex flex-wrap items-center gap-6 text-white/50 text-xs">
+            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-white/55 text-xs">
               {['Consultoria gratuita', 'Sem risco', 'Resultados em 30 dias'].map((t) => (
                 <span key={t} className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-[#00A86B]" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#00A86B]" />
                   {t}
                 </span>
               ))}
@@ -188,11 +184,15 @@ export default function Hero() {
           </div>
 
           {/* ── Right: floating stat cards ── */}
-          <div ref={statsRef} className="hidden lg:flex flex-col gap-5 w-64">
+          <div ref={statsRef} className="hidden lg:flex flex-col gap-4 w-80">
+            <div className="mb-1 border-l-2 border-[#00A86B] pl-4 text-white">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#00A86B]">Confiança mensurável</p>
+              <p className="mt-1 text-sm leading-relaxed text-white/60">Decisões fiscais baseadas em dados, método e segurança.</p>
+            </div>
             {HERO_STATS.map((stat, i) => (
               <div
                 key={stat.label}
-                className={`stat-card ${stat.float} group relative bg-white/8 backdrop-blur-md rounded-2xl p-5 border border-white/15 transition-all duration-300 hover:bg-white/15 hover:border-[#00A86B]/40 cursor-default ${i % 2 !== 0 ? 'ml-8' : ''}`}
+                className={`stat-card ${stat.float} group relative bg-[#001a33]/45 backdrop-blur-md rounded-xl p-4 border border-white/15 transition-all duration-300 hover:bg-white/15 hover:border-[#00A86B]/40 cursor-default ${i % 2 !== 0 ? 'ml-8' : ''}`}
               >
                 <div className="flex items-center gap-4">
                   <div className="w-11 h-11 bg-[#00A86B]/20 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:bg-[#00A86B]">
