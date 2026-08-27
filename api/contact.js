@@ -30,8 +30,6 @@
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || 'https://tributosbrasil.com.br';
 const MAX_BODY_BYTES = 16 * 1024;
 const RATE_LIMIT_MAX    = Number(process.env.RATE_LIMIT_MAX)    || 5;
-import { resolveMx } from 'dns/promises';
-
 const RATE_LIMIT_WINDOW = (Number(process.env.RATE_LIMIT_WINDOW) || 60) * 1000;
 
 const SEGMENTS = new Set([
@@ -109,18 +107,6 @@ function sanitizeMessage(value) {
 /** Email format with bounded quantifiers (no ReDoS). */
 function isValidEmail(email) {
   return /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{1,63}$/.test(email);
-}
-
-/** Check if email domain has valid MX records */
-async function hasValidMxRecord(email) {
-  try {
-    const domain = email.split('@')[1];
-    if (!domain) return false;
-    const records = await resolveMx(domain);
-    return records && records.length > 0;
-  } catch (err) {
-    return false;
-  }
 }
 
 /** Brazilian phone: (XX) XXXX-XXXX or (XX) XXXXX-XXXX. */
@@ -207,7 +193,7 @@ export default async function handler(req, res) {
   }
 
   // 7. Honeypot
-  if (typeof body.honeypot === 'string' && body.honeypot.length > 0) {
+  if (typeof body._trap === 'string' && body._trap.length > 0) {
     return res.status(200).json({ ok: true });
   }
 
@@ -225,7 +211,6 @@ export default async function handler(req, res) {
   if (!email)                        return jsonError(res, 422, 'Email é obrigatório.');
   if (email.length > 254)            return jsonError(res, 422, 'Email muito longo.');
   if (!isValidEmail(email))          return jsonError(res, 422, 'Email inválido.');
-  if (!(await hasValidMxRecord(email))) return jsonError(res, 422, 'Domínio de email inválido.');
   if (phone && !isValidPhone(phone)) return jsonError(res, 422, 'Telefone inválido.');
   if (company.length > 150)          return jsonError(res, 422, 'Razão social muito longa.');
   if (!SEGMENTS.has(segment))        return jsonError(res, 422, 'Segmento inválido.');
