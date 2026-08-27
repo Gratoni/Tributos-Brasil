@@ -25,7 +25,6 @@ import Services from './sections/Services';
 import Clients  from './sections/Clients';
 import Results  from './sections/Results';
 import Gallery  from './sections/Gallery';
-import Calculator from './sections/Calculator';
 import CTA      from './sections/CTA';
 import Contact  from './sections/Contact';
 import Footer   from './sections/Footer';
@@ -130,7 +129,6 @@ export default function App() {
         <About />
         <Stats />
         <Services />
-        <Calculator />
         <Clients />
         <Results />
         <Gallery />
