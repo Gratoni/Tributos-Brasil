@@ -3,7 +3,7 @@
  * =========================================
  * Lead-capture form with:
  *   - Controlled form state (name, email, phone, company, segment, message)
- *   - Honeypot anti-spam field (_trap)
+ *   - Honeypot anti-spam field (honeypot)
  *   - Client-side validation (name, email required; phone format; length limits)
  *   - POST to /api/contact serverless function
  *   - Success / error / loading states
@@ -163,13 +163,13 @@ export default function Contact() {
     setSubmitting(true);
 
     // Read honeypot value from the hidden input
-    const trapValue = (e.currentTarget.elements.namedItem('_trap') as HTMLInputElement | null)?.value ?? '';
+    const trapValue = (e.currentTarget.elements.namedItem('honeypot') as HTMLInputElement | null)?.value ?? '';
 
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, _trap: trapValue }),
+        body: JSON.stringify({ ...form, honeypot: trapValue }),
       });
 
       const data = await res.json().catch(() => ({}));
@@ -229,7 +229,7 @@ export default function Contact() {
               {/* Honeypot — hidden from real users, bots will fill it */}
               <input
                 type="text"
-                name="_trap"
+                name="honeypot"
                 tabIndex={-1}
                 autoComplete="off"
                 aria-hidden="true"
