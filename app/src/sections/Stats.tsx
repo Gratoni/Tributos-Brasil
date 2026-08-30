@@ -26,7 +26,7 @@ interface StatItem {
 }
 
 const STATS: StatItem[] = [
-  { value: 5,   prefix: '+R$ ', suffix: ' milhões', label: 'recuperados',          icon: Coins,       color: '#00A86B' },
+  { value: 50,  prefix: '+R$ ', suffix: ' milhões', label: 'recuperados',          icon: Coins,       color: '#00A86B' },
   { value: 100, prefix: '+',    suffix: '',          label: 'Clientes atendidos',   icon: Users,       color: '#00A86B' },
   { value: 98,  prefix: '',     suffix: '%',         label: 'Taxa de sucesso',       icon: ShieldCheck, color: '#00A86B' },
   { value: 10,  prefix: '+',    suffix: '',          label: 'Anos de experiência',   icon: Calendar,    color: '#00A86B' },
