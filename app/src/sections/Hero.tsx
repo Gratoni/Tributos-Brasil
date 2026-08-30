@@ -15,7 +15,7 @@ import { ArrowRight, ChevronDown, TrendingUp, Users, Award, ShieldCheck } from '
 
 /** Quick-stats displayed as floating cards on the right column */
 const HERO_STATS = [
-  { value: '+R$ 5M',  label: 'Recuperados',         icon: TrendingUp,  float: 'animate-float' },
+  { value: '+R$ 50M', label: 'Recuperados',         icon: TrendingUp,  float: 'animate-float' },
   { value: '+100',    label: 'Clientes atendidos',   icon: Users,       float: 'animate-float-delayed' },
   { value: '10+ anos',label: 'de experiência',        icon: Award,       float: 'animate-float-slow' },
   { value: '98%',     label: 'Taxa de sucesso',       icon: ShieldCheck, float: 'animate-float' },
@@ -149,7 +149,7 @@ export default function Hero() {
             {/* Subheadline */}
             <p ref={subRef} className="text-lg sm:text-xl text-white/75 mb-10 leading-relaxed max-w-xl">
               Transformamos complexidade fiscal em valor real. Mais de{' '}
-              <strong className="text-[#00A86B] font-bold">R$ 5 milhões</strong>{' '}
+              <strong className="text-[#00A86B] font-bold">R$ 50 milhões</strong>{' '}
               recuperados para nossos clientes com total segurança jurídica.
             </p>
 

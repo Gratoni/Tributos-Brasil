@@ -22,6 +22,7 @@ import Hero     from './sections/Hero';
 import About    from './sections/About';
 import Stats    from './sections/Stats';
 import Services from './sections/Services';
+import TaxCalculator from './sections/TaxCalculator';
 import Clients  from './sections/Clients';
 import Results  from './sections/Results';
 import Gallery  from './sections/Gallery';
@@ -129,6 +130,7 @@ export default function App() {
         <About />
         <Stats />
         <Services />
+        <TaxCalculator />
         <Clients />
         <Results />
         <Gallery />
