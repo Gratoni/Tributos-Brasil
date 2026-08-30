@@ -159,7 +159,7 @@ export default function Services() {
             Soluções completas para sua saúde fiscal
           </h2>
           <p className="text-lg text-[#666] mt-4 max-w-2xl mx-auto">
-            Da recuperação de créditos ao planejamento estratégico — cobrimos todo o espectro
+            Da recuperação de créditos ao planejamento estratégico, cobrimos todo o espectro
             tributário com precisão técnica e foco em resultados.
           </p>
           <div className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[#003366]/60">
